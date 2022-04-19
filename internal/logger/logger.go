@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -36,6 +37,8 @@ func GetLogger(c *gin.Context) *logrus.Entry {
 func NewLoggingMiddleware(logEntry *logrus.Entry) func() gin.HandlerFunc {
 	return func() gin.HandlerFunc {
 		return func(c *gin.Context) {
+			fmt.Println("hello from middleware")
+
 			nextEntry := logEntry.WithFields(logrus.Fields{
 				"method": c.Request.Method,
 				"path":   c.Request.URL.Path,
