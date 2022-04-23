@@ -3,9 +3,11 @@ module github.com/perfectgentlemande/go-postgresql-crud-example
 go 1.18
 
 require (
+	github.com/Masterminds/squirrel v1.5.2
 	github.com/deepmap/oapi-codegen v1.9.1
 	github.com/gin-gonic/gin v1.7.4
 	github.com/golang-migrate/migrate v3.5.4+incompatible
+	github.com/google/uuid v1.2.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/sirupsen/logrus v1.8.1
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
@@ -24,6 +26,8 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/lann/builder v0.0.0-20180802200727-47ae307949d0 // indirect
+	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lib/pq v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
