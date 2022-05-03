@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/perfectgentlemande/go-postgresql-crud-example/internal/logger"
+	"github.com/perfectgentlemande/go-postgresql-crud-example/internal/service"
 	"github.com/sirupsen/logrus"
 )
 
@@ -13,20 +14,25 @@ type Config struct {
 	Prefix string `yaml:"prefix"`
 }
 type ServerParams struct {
-	Cfg *Config
-	Log *logrus.Entry
+	Cfg  *Config
+	Log  *logrus.Entry
+	Srvc *service.Service
 }
 
 type Controller struct {
 	ServerInterface
+
+	srvc *service.Service
 }
 
-func NewController() *Controller {
-	return &Controller{}
+func NewController(srvc *service.Service) *Controller {
+	return &Controller{
+		srvc: srvc,
+	}
 }
 
 func NewServer(params *ServerParams) *http.Server {
-	ctrl := NewController()
+	ctrl := NewController(params.Srvc)
 
 	router := gin.New()
 	router.Use(logger.NewLoggingMiddleware(params.Log)())

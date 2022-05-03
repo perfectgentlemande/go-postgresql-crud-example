@@ -3,10 +3,13 @@ package dbuser
 import (
 	"context"
 	"fmt"
+	"io/fs"
+	"log"
 	"strings"
 
-	"github.com/golang-migrate/migrate"
-	"github.com/golang-migrate/migrate/database/postgres"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -18,22 +21,26 @@ type Database struct {
 	db *sqlx.DB
 }
 
-func NewDatabase(ctx context.Context, config *Config) (*Database, error) {
+func NewDatabase(ctx context.Context, config *Config, migrationsContent fs.FS) (*Database, error) {
+	sourceInstance, err := iofs.New(migrationsContent, "migrations")
+	if err != nil {
+		log.Fatal("cannot create source instance", err)
+	}
 	db, err := sqlx.Connect("pgx", config.ConnStr)
 	if err != nil {
-		return nil, fmt.Errorf("cannot create postgresql client: %w", err)
+		log.Fatal("cannot open postgres:", err)
 	}
-	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
+	targetInstance, err := postgres.WithInstance(db.DB, &postgres.Config{})
 	if err != nil {
-		return nil, fmt.Errorf("cannot create driver: %w", err)
+		log.Fatal("cannot target instance:", err)
 	}
-	m, err := migrate.NewWithDatabaseInstance("file://migrations", "postgres", driver)
+	m, err := migrate.NewWithInstance("iofs", sourceInstance, "postgres", targetInstance)
 	if err != nil {
-		return nil, fmt.Errorf("cannot create db instance: %w", err)
+		return &Database{}, fmt.Errorf("cannot create migrate object: %w", err)
 	}
 	err = m.Up()
 	if err != nil && !strings.Contains(err.Error(), "no change") {
-		return nil, fmt.Errorf("cannot migrate db: %w", err)
+		return &Database{}, fmt.Errorf("cannot migrate db: %w", err)
 	}
 
 	return &Database{
