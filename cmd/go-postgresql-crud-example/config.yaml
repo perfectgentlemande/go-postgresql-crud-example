@@ -5,4 +5,6 @@ dbuser:
   # uncomment this for go run .
   # connstr: "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
   # uncomment this for docker
-  connstr: "postgres://postgres:postgres@postgres-0:5432/postgres?sslmode=disable"
+  # connstr: "postgres://postgres:postgres@postgres-0:5432/postgres?sslmode=disable"
+  # uncomment this for docker compose
+  connstr: "postgres://postgres:postgres@postgres:5432/postgres?sslmode=disable"

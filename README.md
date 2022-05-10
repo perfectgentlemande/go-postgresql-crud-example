@@ -34,3 +34,9 @@ After that you can run your using `go run` if you need.
 Build the app image and run:  
 - `docker build -t go-postgresql-app:v0.1.0 .`  
 - `docker run -it -p 8080:80 --name go-postgresql-app-0 --network db_network go-postgresql-app:v0.1.0`  
+
+### Running via Docker Compose
+
+As simple as:  
+- `docker-compose build`  
+- `docker-compose up`  
