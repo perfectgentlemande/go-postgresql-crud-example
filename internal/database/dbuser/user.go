@@ -62,7 +62,7 @@ func (d *Database) CreateUser(ctx context.Context, user *service.User) (string, 
 		dbUser.ID,
 		dbUser.Username,
 		dbUser.Email,
-		dbUser.Email,
+		dbUser.CreatedAt,
 		dbUser.UpdatedAt).
 		PlaceholderFormat(squirrel.Dollar).
 		ToSql()
