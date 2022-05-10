@@ -1,5 +1,20 @@
 # go-postgresql-crud-example
-Example of REST API. This time includes such things as PostgreSQL, Logrus, Gin router etc...
+Example of REST API.  
+
+Includes:    
+- oapi-codegen;  
+- gin;  
+- logrus;  
+- PostgreSQL;  
+- Docker;
+- Docker Compose.
+
+## Description
+
+Sample project for educational purposes.  
+There are 2 ideas:  
+- checking and glueing together technologies mentioned above;
+- sharing my own experience for the ones who want to glue the same technologies.
 
 ## Generate
 
