@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io/fs"
-	"log"
 	"strings"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -22,17 +21,17 @@ type Database struct {
 }
 
 func NewDatabase(ctx context.Context, config *Config, migrationsContent fs.FS) (*Database, error) {
-	sourceInstance, err := iofs.New(migrationsContent, "migrations")
+	sourceInstance, err := iofs.New(migrationsContent, ".")
 	if err != nil {
-		log.Fatal("cannot create source instance", err)
+		return &Database{}, fmt.Errorf("cannot create source instance: %w", err)
 	}
 	db, err := sqlx.Connect("pgx", config.ConnStr)
 	if err != nil {
-		log.Fatal("cannot open postgres:", err)
+		return &Database{}, fmt.Errorf("cannot open postgres: %w", err)
 	}
 	targetInstance, err := postgres.WithInstance(db.DB, &postgres.Config{})
 	if err != nil {
-		log.Fatal("cannot target instance:", err)
+		return &Database{}, fmt.Errorf("cannot target instance: %w", err)
 	}
 	m, err := migrate.NewWithInstance("iofs", sourceInstance, "postgres", targetInstance)
 	if err != nil {

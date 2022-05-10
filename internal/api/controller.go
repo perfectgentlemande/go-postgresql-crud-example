@@ -36,13 +36,14 @@ func NewServer(params *ServerParams) *http.Server {
 
 	router := gin.New()
 	router.Use(logger.NewLoggingMiddleware(params.Log)())
-	apiRouter := gin.New()
-	RegisterHandlers(apiRouter, ctrl)
 
 	if params.Cfg.Prefix == "" {
 		params.Cfg.Prefix = "/"
 	}
-	router.Group(params.Cfg.Prefix, apiRouter.Handlers...)
+
+	RegisterHandlersWithOptions(router, ctrl, GinServerOptions{
+		BaseURL: params.Cfg.Prefix,
+	})
 
 	return &http.Server{
 		Addr:    params.Cfg.Addr,

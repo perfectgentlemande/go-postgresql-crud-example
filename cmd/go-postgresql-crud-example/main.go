@@ -15,6 +15,8 @@ import (
 	"github.com/perfectgentlemande/go-postgresql-crud-example/internal/service"
 	dbUserMigrations "github.com/perfectgentlemande/go-postgresql-crud-example/migrations/dbuser"
 	"golang.org/x/sync/errgroup"
+
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
 func main() {
