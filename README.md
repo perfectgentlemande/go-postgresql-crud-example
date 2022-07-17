@@ -16,6 +16,10 @@ There are 2 ideas:
 - checking and glueing together technologies mentioned above;
 - sharing my own experience for the ones who want to glue the same technologies.
 
+## Package Diagram
+
+<img src="https://github.com/perfectgentlemande/go-postgresql-crud-example/blob/main/package-diagram.png?raw=true"/>
+
 ## Generate
 
 API boilerplate code is generated using `oapi-codegen` tool from the `openapi.yaml` file.  
