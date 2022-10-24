@@ -7,7 +7,8 @@ Includes:
 - logrus;  
 - PostgreSQL;  
 - Docker;
-- Docker Compose.
+- Docker Compose;
+- gomock.
 
 ## Description
 
